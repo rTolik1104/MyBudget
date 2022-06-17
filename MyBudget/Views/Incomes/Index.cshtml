@@ -1,0 +1,63 @@
+﻿@model IncomesListVM
+<h1>Доходы</h1>
+<div class="insights2">
+    <div class="sales">
+        <span class="material-symbols-sharp">
+            paid
+        </span>
+        <div class="middle">
+            <div class="lef">
+                <h3>Общий доход</h3>
+                <h1>$@Model.TotalIncome</h1>
+            </div>
+            <div class="progress">
+                <svg>
+                    <circle cx='38' cy='38' r='36' style="stroke-dashoffset:50;stroke-dasharray: 200"></circle>
+                </svg>
+                <div class="number">
+                    <p>81%</p>
+                </div>
+            </div>
+        </div>
+        <small class="text-muted">За последний месяц</small>
+    </div>
+</div>
+<div class="recent-order">
+    <h2>Список доходов</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Сумма</th>
+                <th>Комментарий</th>
+                <th>Дата</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var income in Model.Incomes)
+            {
+                <tr>
+                    <td>@income.Category</td>
+                    <td><span class="income">Income</span></td>
+                    <td>@income.Amout$</td>
+                    <td>@income.Comment</td>
+                    <td>@income.Date</td>
+                    <td class="options">
+                        <a onclick="showInPopup('@Url.Action("DeleteIncome","Incomes",new { incomeId = @income.IncomeId },Context.Request.Scheme)', 'Добавить доход')" class="logout">
+                            <span class="material-symbols-sharp">
+                                delete
+                            </span>
+                        </a>
+                        <a onclick="showInPopup('@Url.Action("EditIncome","Incomes",new { incomeId = @income.IncomeId },Context.Request.Scheme)', 'Изменение данных')" class="logout">
+                            <span class="material-symbols-sharp">
+                                edit
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

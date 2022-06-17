@@ -1,0 +1,63 @@
+﻿@model ExpensesListVM
+<h1>Расходы</h1>
+<div class="insights2">
+    <div class="expenses">
+        <span class="material-symbols-sharp">
+            money_off
+        </span>
+        <div class="middle">
+            <div class="lef">
+                <h3>Общий расход</h3>
+                <h1>$@Model.Total</h1>
+            </div>
+            <div class="progress">
+                <svg>
+                    <circle cx='38' cy='38' r='36' style="stroke-dashoffset:50;stroke-dasharray: 200"></circle>
+                </svg>
+                <div class="number">
+                    <p>81%</p>
+                </div>
+            </div>
+        </div>
+        <small class="text-muted">За последний месяц</small>
+    </div>
+</div>
+<div class="recent-order">
+    <h2>Список расходов</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Сумма</th>
+                <th>Комментарий</th>
+                <th>Дата</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var expense in Model.Expenses)
+            {
+                <tr>
+                    <td>@expense.Category</td>
+                    <td><span class="expense">Income</span></td>
+                    <td>@expense.Amout$</td>
+                    <td>@expense.Comment</td>
+                    <td>@expense.Date</td>
+                    <td class="options">
+                        <a onclick="showInPopup('@Url.Action("DeleteExpense","Expenses",new { expenseId = @expense.ExpenseId },Context.Request.Scheme)', 'Добавить доход')" class="logout">
+                            <span class="material-symbols-sharp">
+                                delete
+                            </span>
+                        </a>
+                        <a onclick="showInPopup('@Url.Action("EditExpense","Expenses",new { expenseId = @expense.ExpenseId },Context.Request.Scheme)', 'Изменение данных')" class="logout">
+                            <span class="material-symbols-sharp">
+                                edit
+                            </span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

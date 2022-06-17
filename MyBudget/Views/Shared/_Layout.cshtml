@@ -1,0 +1,185 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<Users> userManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyBudget</title>
+    <link rel="stylesheet" href="~/MyBudget.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/modal.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2 style="margin-left:40px;">My<span class="danger">Budget</span></h2>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-sharp">
+                        close
+                    </span>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a asp-controller="Home" asp-action="Index">
+                    <span class="material-symbols-sharp">
+                        grid_view
+                    </span>
+                    <h3>Гланая</h3>
+                </a>
+                <a asp-controller="Incomes" asp-action="Index">
+                    <span class="material-symbols-sharp">
+                        paid
+                    </span>
+                    <h3>Доход</h3>
+                </a>
+                <a asp-controller="Expenses" asp-action="Index">
+                    <span class="material-symbols-sharp">
+                        money_off
+                    </span>
+                    <h3>Расход</h3>
+                </a>
+                <a asp-controller="Monitoring" asp-action="Index">
+                    <span class="material-symbols-sharp">
+                        monitoring  
+                    </span>
+                    <h3>Статистика</h3>
+                </a>
+                <a asp-controller="History" asp-action="Index">
+                    <span class="material-symbols-sharp">
+                        currency_exchange
+                    </span>
+                    <h3>История</h3>
+                </a>
+                <form asp-controller="Account" asp-action="Logout" method="post" style="margin-top:150px">
+                    <a href="#" class="logout">
+                        <span class="material-symbols-sharp">
+                            logout
+                        </span>
+                        <h3><input type="submit" value="Выйти" /></h3>
+                    </a>
+                </form>
+            </div>
+        </aside>
+
+        <main>
+            @RenderBody()
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-symbols-sharp">
+                        menu
+                    </span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-sharp active">
+                        light_mode
+                    </span>
+                    <span class="material-symbols-sharp">
+                        dark_mode
+                    </span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Привет, <b>@userManager.GetUserName(User)</b></p>
+                        <small class="text-muted">Member</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr7r8Vz0Q3zz-BYw-WYLAlE0vIo5x9vviGeQ&usqp=CAU">
+                    </div>
+                </div>
+            </div>
+            <div class="sales-analytics">
+                <h2>Последние действия</h2>
+                <div class="item online">
+                    <div class="icon">
+                        <span class="material-symbols-sharp">
+                            shopping_cart
+                        </span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>ОНЛАЙН ЗАКАЗЫ</h3>
+                            <small class="text-muted">Последние 24 Часа</small>
+                        </div>
+                        <h5 class="success">+1478$</h5>
+                        <h3>3849$</h3>
+                    </div>
+                </div>
+                <div class="item offline">
+                    <div class="icon">
+                        <span class="material-symbols-sharp">
+                            local_mall
+                        </span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Покупки</h3>
+                            <small class="text-muted">Последние 24 Часа</small>
+                        </div>
+                        <h5 class="danger">-547$</h5>
+                        <h3>2189$</h3>
+                    </div>
+                </div>
+                <div class="item customers">
+                    <div class="icon">
+                        <span class="material-symbols-sharp">
+                            person
+                        </span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Арендаторы</h3>
+                            <small class="text-muted">Последние 24 Часа</small>
+                        </div>
+                        <h5 class="success">+25$</h5>
+                        <h3>458$</h3>
+                    </div>
+                </div>
+                <div class="item add-product2">
+                    <a onclick="showInPopup('@Url.Action("AddIncome","Incomes",null,Context.Request.Scheme)', 'Добавить доход')">
+                        <span class="material-symbols-sharp">
+                            add
+                        </span>
+                        <h3>Добавить доход</h3>
+                    </a>
+                </div>
+                <div class="item add-product">
+                    <a onclick="showInPopup('@Url.Action("AddExpense","Expenses",null,Context.Request.Scheme)', 'Добавить расход')">
+                        <span class="material-symbols-sharp">
+                            add
+                        </span>
+                        <h3>Добавить расход</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title"></h3>
+            <button type="button" class="close1">
+                <span>×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+
+        </div>
+      </div>
+    </div>
+
+     <script src="~/js/site.js"></script>
+     <script src="~/js/modal.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@model EditExpenseVM
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/css/addIncome.css" />
+</head>
+<body>
+    <form asp-controller="Expenses" asp-action="EditExpense" method="post">
+        <div class="input-group">
+            <div>
+                <label>Дата</label>
+                <input asp-for="Date"/>
+            </div>
+            <div>
+                <label>Категория</label>
+                <select asp-for="Category" asp-items="ViewBag.Categories"></select>
+            </div>
+        </div>
+        <div class="input-group">
+            <div>
+                <label>Сума</label>
+                <input asp-for="Amount" required/>
+            </div>
+            <div>
+                <label>Коммент</label>
+                <input asp-for="Comment"/>
+            </div>
+        </div>
+        <input type="hidden" asp-for="ExpenseId" />
+        <div class="submit2">
+            <button type="submit">Сохранить</button>
+        </div>
+    </form>
+</body>

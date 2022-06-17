@@ -1,0 +1,84 @@
+﻿@model IndexVM
+<h1>Главная</h1>
+<div class="date">
+    <input value="@DateTime.Now" readonly/>
+</div>
+<div class="insights">
+    <div class="sales">
+        <span class="material-symbols-sharp">
+            paid
+        </span>
+        <div class="middle">
+            <div class="lef">
+                <h3>Общий доход</h3>
+                <h1>$@Model.TotalIncome</h1>
+            </div>
+            <div class="progress">
+                <svg>
+                    <circle cx='38' cy='38' r='36' style="stroke-dashoffset:50;stroke-dasharray: 200"></circle>
+                </svg>
+                <div class="number">
+                    <p>81%</p>
+                </div>
+            </div>
+        </div>
+        <small class="text-muted">Последний месяц</small>
+    </div>
+    <div class="expenses">
+        <span class="material-symbols-sharp">
+            money_off
+        </span>
+        <div class="middle">
+            <div class="lef">
+                <h3>Общий расход</h3>
+                <h1>$@Model.TotalOutcome</h1>
+            </div>
+            <div class="progress">
+                <svg>
+                    <circle cx='38' cy='38' r='36'></circle>
+                </svg>
+                <div class="number">
+                    <p>81%</p>
+                </div>
+            </div>
+        </div>
+        <small class="text-muted">Последний месяц</small>
+    </div>
+</div>
+<div class="recent-order">
+    <h2>Последние действия</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Суммма</th>
+                <th>Комментарий</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var income in Model.LastTransactions.Incomes.Take(3))
+            {
+                <tr>
+                    <td>@income.Category</td>
+                    <td><span class="income">Income</span></td>
+                    <td>@income.Amout</td>
+                    <td>@income.Comment</td>
+                    <td>@income.Date</td>
+                </tr>
+            }
+            @foreach(var expense in Model.LastTransactions.Expenses.Take(3))
+            {
+                <tr>
+                    <td>@expense.Category</td>
+                    <td><span class="expense">Expenses</span></td>
+                    <td>@expense.Amout</td>
+                    <td>@expense.Comment</td>
+                    <td>@expense.Date</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-controller="History" asp-action="Index">Show All</a>
+</div>

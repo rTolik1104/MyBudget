@@ -1,0 +1,123 @@
+﻿@model MonitoringVM
+<h1>Статистика</h1>
+<div class="insights2">
+    @if (Model.ResultTotal > 0)
+    {
+        <div class="sales">
+            <span class="material-symbols-sharp">
+                paid
+            </span>
+            <div class="middle">
+                <div class="lef">
+                    <h3>Пока что вы в плюсе</h3>
+                    <h1>$@Model.ResultTotal</h1>
+                </div>
+                <div class="progress">
+                    <svg>
+                        <circle cx='38' cy='38' r='36' style="stroke-dashoffset:50;stroke-dasharray: 200"></circle>
+                    </svg>
+                    <div class="number">
+                        <p>81%</p>
+                    </div>
+                </div>
+            </div>
+            <small class="text-muted">За последний месяц</small>
+        </div>
+    }
+    else
+    {
+       <div class="expenses">
+            <span class="material-symbols-sharp">
+                money_off
+            </span>
+            <div class="middle">
+                <div class="lef">
+                    <h3>Вы в минусе. Экономьте пожалуйста!</h3>
+                    <h1>$@Model.ResultTotal</h1>
+                </div>
+                <div class="progress">
+                    <svg>
+                        <circle cx='38' cy='38' r='36' style="stroke-dashoffset:50;stroke-dasharray: 200"></circle>
+                    </svg>
+                    <div class="number">
+                        <p>81%</p>
+                    </div>
+                </div>
+            </div>
+            <small class="text-muted">За последний месяц</small>
+        </div> 
+    }
+</div>
+
+<div class="recent-order">
+    <h2>Доходы в общем</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Зароботная плата</td>
+                <td><span class="income">Доход</span></td>
+                <td>@Model.TotalIncomeSalary$</td>
+            </tr>
+            <tr>
+                <td>Доход с аренды</td>
+                <td><span class="income">Доход</span></td>
+                <td>@Model.TotalIncomeRent$</td>
+            </tr>
+            <tr>
+                <td>Другие доходы</td>
+                <td><span class="income">Доход</span></td>
+                <td>@Model.TotalIncomeOther$</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 style="margin-top:20px">Расходы в общем</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Категория</th>
+                <th>Статус</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Продукты питания</td>
+                <td><span class="expense">Расход</span></td>
+                <td>@Model.TotalExpenseFood$</td>
+            </tr>
+            <tr>
+                <td>Транспорт</td>
+                <td><span class="expense">Расход</span></td>
+                <td>@Model.TotalExpenseTransport$</td>
+            </tr>
+            <tr>
+                <td>Мобильная связь</td>
+                <td><span class="expense">Расход</span></td>
+                <td>@Model.TotalExpenseMobile$</td>
+            </tr>
+            <tr>
+                <td>Интернет</td>
+                <td><span class="expense">Расход</span></td>
+                <td>@Model.TotalExpenseInternet$</td>
+            </tr>
+            <tr>
+                <td>Развлечения</td>
+                <td><span class="expense">Расход</span></td>
+                <td>@Model.TotalExpenseHangOut$</td>
+            </tr>
+            <tr>
+                <td>Другие расходы</td>
+                <td><span class="expense">Расход</span></td>
+                <td>@Model.TotalExpenseOther$</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
